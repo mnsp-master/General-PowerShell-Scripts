@@ -1,16 +1,16 @@
 #############################
-$CID="DEV9999"
-$DataDir="D:\AppData\Rundeck\$CID\Data"
-$LogDir="D:\AppData\Rundeck\$CID\Logs"
+$CID="01155"
+$workDir = "C:\Temp"
+$DataDir="$WorkDir\$CID\Data"
+$LogDir="$WorkDir\$CID\Logs"
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 $tempcsv="$DataDir\temp.csv"
 $tempcsv2="$DataDir\temp2.csv"
 $now = $(Get-Date -Format "dd MMMM yyyy HHHH:mm:s")
 
-$workdir = C:\Temp
 
 $mnspver = "0.0.0.0.0.1"
-$hosts_csv = "C:\TEMP\hosts.csv"
+$hosts_csv = "$workDir\hosts.csv"
 Clear-Content $hosts_csv
 
 
