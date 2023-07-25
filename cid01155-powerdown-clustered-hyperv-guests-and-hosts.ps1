@@ -1,4 +1,4 @@
-$mnspver = "0.0.0.0.0.6"
+$mnspver = "0.0.0.0.0.7"
 $CID="01155"
 $WorkDir = "C:\Temp\MNSP"
 $DataDir="$WorkDir\C$CID\Data"
@@ -21,7 +21,7 @@ if ( Test-Path $DataDir ) {
 
 start-transcript -path $transcriptlog
 
-Clear-Content $hosts_csv
+#Clear-Content $hosts_csv
 
 #$clusterNodesCSV = Get-ClusterNode | Export-Csv -path $hosts_csv
 $clusterNodes = Import-csv -Path $hosts_csv # dev process limit to csv contents
