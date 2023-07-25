@@ -1,11 +1,10 @@
-#############################
+$mnspver = "0.0.0.0.0.1"
 $CID="01155"
-$WorkDir = "C:\Temp"
+$WorkDir = "C:\Temp\MNSP"
 $DataDir="$WorkDir\C$CID\Data"
 $LogDir="$WorkDir\C$CID\Logs"
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 $now = $(Get-Date -Format "dd MMMM yyyy HHHH:mm:s")
-$mnspver = "0.0.0.0.0.1"
 $hosts_csv = "$DataDir\hosts.csv"
 
 if ( Test-Path $LogDir ) {
