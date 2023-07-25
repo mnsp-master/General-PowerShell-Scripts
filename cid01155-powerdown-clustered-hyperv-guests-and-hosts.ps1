@@ -1,4 +1,4 @@
-$mnspver = "0.0.0.0.0.1"
+$mnspver = "0.0.0.0.0.2"
 $CID="01155"
 $WorkDir = "C:\Temp\MNSP"
 $DataDir="$WorkDir\C$CID\Data"
@@ -47,12 +47,5 @@ Write-Host "Finding all running VM guests on host: " $clusterNode
             start-sleep 1
         Remove-PSSession -Id $HostRemoteSession.Id
 }
-
-   if (Test-Path -path $SimsInstancesCSV ) {
-
-        Write-Host "$SimsInstancesCSV exists, deleting..."
-        Remove-Item -Path $SimsInstancesCSV -Force
-    }
-
 
 Stop-transcript
