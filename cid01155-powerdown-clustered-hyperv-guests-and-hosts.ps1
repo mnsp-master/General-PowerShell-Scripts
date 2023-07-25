@@ -1,4 +1,4 @@
-$mnspver = "0.0.0.0.0.4"
+$mnspver = "0.0.0.0.0.5"
 $CID="01155"
 $WorkDir = "C:\Temp\MNSP"
 $DataDir="$WorkDir\C$CID\Data"
@@ -15,8 +15,8 @@ if ( Test-Path $LogDir ) {
 
 if ( Test-Path $DataDir ) {
     } else {
-        Write-Host "$logDir not exist, creating..."
-        New-Item -Path $LogDir -ItemType Directory -verbose
+        Write-Host "$DataDir not exist, creating..."
+        New-Item -Path $DataDir -ItemType Directory -verbose
     }
 
 start-transcript -path $transcriptlog
