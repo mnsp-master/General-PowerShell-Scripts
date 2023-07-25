@@ -1,4 +1,4 @@
-$mnspver = "0.0.0.0.0.3"
+$mnspver = "0.0.0.0.0.4"
 $CID="01155"
 $WorkDir = "C:\Temp\MNSP"
 $DataDir="$WorkDir\C$CID\Data"
