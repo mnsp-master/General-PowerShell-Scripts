@@ -1,4 +1,4 @@
-$mnspver = "0.0.0.0.0.5"
+$mnspver = "0.0.0.0.0.6"
 $CID="01155"
 $WorkDir = "C:\Temp\MNSP"
 $DataDir="$WorkDir\C$CID\Data"
@@ -23,7 +23,7 @@ start-transcript -path $transcriptlog
 
 Clear-Content $hosts_csv
 
-$clusterNodesCSV = Get-ClusterNode | Export-Csv -path $hosts_csv
+#$clusterNodesCSV = Get-ClusterNode | Export-Csv -path $hosts_csv
 $clusterNodes = Import-csv -Path $hosts_csv # dev process limit to csv contents
 
 #$clusterNodes = Get-ClusterNode | sort -Descending # production dynamically get all hosts in cluster
