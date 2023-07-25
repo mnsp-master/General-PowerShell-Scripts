@@ -7,8 +7,6 @@ $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 $tempcsv="$DataDir\temp.csv"
 $tempcsv2="$DataDir\temp2.csv"
 $now = $(Get-Date -Format "dd MMMM yyyy HHHH:mm:s")
-
-
 $mnspver = "0.0.0.0.0.1"
 $hosts_csv = "$workDir\hosts.csv"
 Clear-Content $hosts_csv
