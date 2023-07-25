@@ -1,4 +1,4 @@
-$mnspver = "0.0.0.0.0.7"
+$mnspver = "0.0.0.0.0.8"
 $CID="01155"
 $WorkDir = "C:\Temp\MNSP"
 $DataDir="$WorkDir\C$CID\Data"
@@ -29,9 +29,9 @@ $clusterNodes = Import-csv -Path $hosts_csv # dev process limit to csv contents
 #$clusterNodes = Get-ClusterNode | sort -Descending # production dynamically get all hosts in cluster
 
 foreach ($clusterNode in $clusterNodes) {
-Write-Host "Finding all running VM guests on host: " $clusterNode
+Write-Host "Finding all running VM guests on host: " $($clusterNode.Name)
 
-        $HostRemoteSession = New-PSSession -ComputerName $clusterNode
+        $HostRemoteSession = New-PSSession -ComputerName $($clusterNode.Name)
         Get-PSSession
         Invoke-Command -Session $HostRemoteSession -ScriptBlock {
             $RunningVMs = @()
