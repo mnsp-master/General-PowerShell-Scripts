@@ -1,16 +1,28 @@
 #############################
 $CID="01155"
-$workDir = "C:\Temp"
-$DataDir="$WorkDir\$CID\Data"
-$LogDir="$WorkDir\$CID\Logs"
+$WorkDir = "C:\Temp"
+$DataDir="$WorkDir\C$CID\Data"
+$LogDir="$WorkDir\C$CID\Logs"
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
-$tempcsv="$DataDir\temp.csv"
-$tempcsv2="$DataDir\temp2.csv"
 $now = $(Get-Date -Format "dd MMMM yyyy HHHH:mm:s")
 $mnspver = "0.0.0.0.0.1"
-$hosts_csv = "$workDir\hosts.csv"
-Clear-Content $hosts_csv
+$hosts_csv = "$DataDir\hosts.csv"
 
+if ( Test-Path $LogDir ) {
+    } else {
+        Write-Host "$logDir not exist, creating..."
+        New-Item -Path $LogDir -ItemType Directory -verbose
+    }
+
+if ( Test-Path $DataDir ) {
+    } else {
+        Write-Host "$logDir not exist, creating..."
+        New-Item -Path $LogDir -ItemType Directory -verbose
+    }
+
+start-transcriptlog -path $transcriptlog
+
+Clear-Content $hosts_csv
 
 $clusterNodesCSV = Get-ClusterNode | Export-Csv -path $hosts_csv
 $clusterNodes = Import-csv -Path $hosts_csv # dev process limit to csv contents
@@ -37,3 +49,11 @@ Write-Host "Finding all running VM guests on host: " $clusterNode
         Remove-PSSession -Id $HostRemoteSession.Id
 }
 
+   if (Test-Path -path $SimsInstancesCSV ) {
+
+        Write-Host "$SimsInstancesCSV exists, deleting..."
+        Remove-Item -Path $SimsInstancesCSV -Force
+    }
+
+
+Stop-transcript
