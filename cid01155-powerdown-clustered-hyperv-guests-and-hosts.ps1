@@ -1,4 +1,4 @@
-$mnspver = "0.0.0.0.1.1"
+$mnspver = "0.0.0.0.1.2"
 $CID="01155"
 $WorkDir = "C:\Temp\MNSP"
 $DataDir="$WorkDir\C$CID\Data"
@@ -41,8 +41,9 @@ foreach ($clusterNode in $clusterNodes) {
             #$RunningVMs
             start-sleep 1
 
+                #shutdown all running VM's...
                 foreach ($RunningVM in $RunningVMs) {
-                Write-Host "Stop-VM -name $($RunningVM.name) -Force -verbose -Confirm:$false -Verbose"
+                Stop-VM -name $($RunningVM.name) -Force -verbose -Confirm:$false -Verbose
                 Write-Host "-----------------------------------------------`n"
                 }
             }
