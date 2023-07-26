@@ -1,4 +1,4 @@
-$mnspver = "0.0.0.0.1.8"
+$mnspver = "0.0.0.0.1.9"
 $CID="01155"
 $WorkDir = "C:\Temp\MNSP"
 $DataDir="$WorkDir\C$CID\Data"
@@ -29,12 +29,14 @@ $clusterNodes = Import-csv -Path $hosts_csv # dev process limit to csv contents
 #$clusterNodes = Get-ClusterNode | sort -Descending # production dynamically get all hosts in cluster
 
 foreach ($clusterNode in $clusterNodes) {
-        Write-Host "Opening Remote Session to host: " $($clusterNode.Name)
-        $HostRemoteSession = New-PSSession -ComputerName $($clusterNode.Name)
+        $Node = @()
+        $Node = $($clusterNode.Name)
+        Write-Host "Opening Remote Session to host: " $Node
+        $HostRemoteSession = New-PSSession -ComputerName $Node
         Get-PSSession
         Write-Host "-----------------------------------------------`n"
 
-        Write-Host "Finding all running VM guests on host: " $($clusterNode.Name)
+        Write-Host "Finding all running VM guests on host: " $Node
         Invoke-Command -Session $HostRemoteSession -ScriptBlock {
             $RunningVMs = @()
             $RunningVMs = $(Get-VM | where state -eq 'Running')
@@ -50,7 +52,7 @@ foreach ($clusterNode in $clusterNodes) {
                 #running VMs check/wait...
                     do
                     {
-                        Write-Host (Get-Date)": Checking Virtual Machine Power State on $($clusterNode.Name)"
+                        Write-Host (Get-Date)": Checking Virtual Machine Power State on $Node"
                         $RunningVMsChk = Get-VM | Where-Object -Property State -eq "Running"
                         if ($RunningVMsChk)
                         {
@@ -61,8 +63,8 @@ foreach ($clusterNode in $clusterNodes) {
                     }
                     until ($null -eq $RunningVMsChk)
 
-                Write-Host "Shutting down host: " $($clusterNode.Name)
-                Write-Host "stop-computer -ComputerName $($clusterNode.Name) -force"
+                Write-Host "Shutting down host: " $Node
+                Write-Host "stop-computer -ComputerName $Node -force"
                 Start-sleep 20
             }
             start-sleep 1
