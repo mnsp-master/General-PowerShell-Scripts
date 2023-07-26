@@ -1,4 +1,4 @@
-$mnspver = "0.0.0.0.1.4"
+$mnspver = "0.0.0.0.1.5"
 $CID="01155"
 $WorkDir = "C:\Temp\MNSP"
 $DataDir="$WorkDir\C$CID\Data"
@@ -46,6 +46,20 @@ foreach ($clusterNode in $clusterNodes) {
                 Stop-VM -name $($RunningVM.name) -Force -Confirm:$false -Verbose
                 Write-Host "-----------------------------------------------`n"
                 }
+
+                #running VMs check/wait...
+                    do
+                    {
+                        Write-Host (Get-Date)": Checking Virtual Machine Power State on $($clusterNode.Name)"
+                        $RunningVMsChk = Get-VM | Where-Object -Property State -eq "Running"
+                        if ($RunningVMsChk)
+                        {
+                            Get-Date
+                            Write-Host "VM's still running sleeping for 30 Seconds..."
+                            Start-Sleep -Seconds 30
+                        }
+                    }
+                    until ($null -eq $RunningVMsChk)
             }
             start-sleep 1
         Remove-PSSession -Id $HostRemoteSession.Id
@@ -55,17 +69,7 @@ Stop-transcript
 
 
 <#
-#running VMs check/wait...
-do
-{
-    Write-Host (Get-Date)": Checking Virtual Machine Power State on $($clusterNode.Name)"
-    $RunningVMsChk = Get-VM | Where-Object -Property State -eq "Running"
-    if ($RunningVMsChk)
-    {
-        Start-Sleep -Seconds 10
-    }
-}
-until ($null -eq $RunningVMs)
+
 
 Restart-Computer -Force
 #>
