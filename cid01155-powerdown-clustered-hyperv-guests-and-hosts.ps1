@@ -1,4 +1,4 @@
-$mnspver = "0.0.0.0.1.9.3"
+$mnspver = "0.0.0.0.1.9.4"
 $CID="01155"
 $WorkDir = "C:\Temp\MNSP"
 $DataDir="$WorkDir\C$CID\Data"
@@ -69,7 +69,7 @@ foreach ($clusterNode in $clusterNodes) {
         Remove-PSSession -Id $HostRemoteSession.Id
 
         Write-Host "Shutting down host: " $Node
-        Stop-computer -ComputerName $Node -force
+        #Stop-computer -ComputerName $Node -force
 }
 
 Stop-transcript
