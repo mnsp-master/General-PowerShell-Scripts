@@ -1,3 +1,5 @@
+# consider adding live migration of Prinmary DC to last host to be shutdown - DNS/name resolution
+# Move-ClusterVirtualMachineRole -Name "Virtual Machine1" -Node node2
 $mnspver = "0.0.0.0.1.9.4"
 $CID="01155"
 $WorkDir = "C:\Temp\MNSP"
