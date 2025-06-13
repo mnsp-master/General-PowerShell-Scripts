@@ -1,6 +1,8 @@
-#MNSP Version 1.0.2
+#MNSP Version 1.0.3
 
 #generate OID
+$OID = "REPLACE_THIS"
+
 $Prefix = "1.2.840.113556.1.8000.2554"
 $GUID = [System.Guid]::NewGuid().ToString()
 $GUIDPart = @()
@@ -14,7 +16,7 @@ $GUIDPart += [UInt64]::Parse($GUID.SubString(30,6), "AllowHexSpecifier")
 $OID = [String]::Format("{0}.{1}.{2}.{3}.{4}.{5}.{6}.{7}", $Prefix, $GUIDPart[0], $GUIDPart[1], $GUIDPart[2], $GUIDPart[3], $GUIDPart[4], $GUIDPart[5], $GUIDPart[6])
 Write-Host $OID -ForegroundColor Green
 
-Start-sleep 10
+Start-sleep 5
 
 # get AD schema path
 $adSchema = (Get-ADRootDSE).schemaNamingContext
@@ -29,7 +31,6 @@ $attributeName = "mnspAdminNumber"
 $attributeDesc = "MNSP Admin Number"
 
 # paste the OID generated earlier
-$OID = "REPLACE_THIS"
 
 # oMSyntax is "64" for String (Unicode). Refer this link for other types: https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-adts/7cda533e-d7a4-4aec-a517-91d02ff4a1aa
 $oMSyntax = 64
