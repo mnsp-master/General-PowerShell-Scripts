@@ -1,4 +1,4 @@
-#MNSP Version 1.0.0
+#MNSP Version 1.0.1
 
 # get AD schema path
 $adSchema = (Get-ADRootDSE).schemaNamingContext
@@ -44,6 +44,6 @@ if ($OID -eq "REPLACE_THIS") {
 
 
 # create the custom attribute in AD schema
-New-ADObject -Name  $attributeName -Type attributeSchema -Path $adSchema -OtherAttributes $adAttributes
+New-ADObject -Name $attributeName -Type attributeSchema -Path $adSchema -OtherAttributes $adAttributes
 # add the custom attribute to user class
 $userSchema | Set-ADObject -Add @{mayContain = $attributeName} -verbose
