@@ -1,4 +1,4 @@
-#MNSP Version 1.0.3
+#MNSP Version 1.0.4
 
 #generate OID
 $OID = "REPLACE_THIS"
@@ -56,7 +56,7 @@ $adAttributes = @{
 }
 
 if ($OID -eq "REPLACE_THIS") {
-    throw "You need to update OID value - exiting"
+    throw "OID value incorrect - exiting" ## needs better QOS ###
 }
 
 
