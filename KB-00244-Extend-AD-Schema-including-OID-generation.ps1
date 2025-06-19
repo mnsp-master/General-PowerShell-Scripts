@@ -1,7 +1,8 @@
-#MNSP Version 1.0.6
+#MNSP Version 1.0.7
 
 Clear-Host
 $LogDir = @()
+Write-Host ""
 $LogDir = Read-Host "Path for Transcript log, e.g D:\Temp\ADschemaExtension" 
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 
@@ -73,7 +74,6 @@ $adAttributes = @{
 if ($OID -eq "REPLACE_THIS") {
     throw "OID value incorrect - exiting" ## needs better QOS ###
 }
-
 
 # create the custom attribute in AD schema
 New-ADObject -Name $attributeName -Type attributeSchema -Path $adSchema -OtherAttributes $adAttributes
