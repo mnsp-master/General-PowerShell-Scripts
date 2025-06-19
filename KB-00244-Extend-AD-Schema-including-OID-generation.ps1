@@ -1,4 +1,19 @@
-#MNSP Version 1.0.4
+#MNSP Version 1.0.6
+
+Clear-Host
+$LogDir = @()
+$LogDir = Read-Host "Path for Transcript log, e.g D:\Temp\ADschemaExtension" 
+$transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
+
+Write-Host "Checking for $LogDir"
+
+If(!(test-path -PathType container $LogDir))
+{
+      Write-Warning "$LogDir does not exist exiting script..."
+      throw
+}
+
+Start-Transcript -Path $transcriptlog -Force -NoClobber -Append
 
 #generate OID
 $OID = "REPLACE_THIS"
@@ -64,3 +79,5 @@ if ($OID -eq "REPLACE_THIS") {
 New-ADObject -Name $attributeName -Type attributeSchema -Path $adSchema -OtherAttributes $adAttributes
 # add the custom attribute to user class
 $userSchema | Set-ADObject -Add @{mayContain = $attributeName} -verbose
+
+Stop-Transcript
