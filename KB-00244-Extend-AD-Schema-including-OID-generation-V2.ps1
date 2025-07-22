@@ -1,4 +1,4 @@
-$mnspver = "1.0.9"
+$mnspver = "1.0.10"
 
 Clear-Host
 $LogDir = @()
@@ -39,23 +39,29 @@ $GUIDPart += [UInt64]::Parse($GUID.SubString(30,6), "AllowHexSpecifier")
 $OID = [String]::Format("{0}.{1}.{2}.{3}.{4}.{5}.{6}.{7}", $Prefix, $GUIDPart[0], $GUIDPart[1], $GUIDPart[2], $GUIDPart[3], $GUIDPart[4], $GUIDPart[5], $GUIDPart[6])
 Write-Host $OID -ForegroundColor Green
 
+DashedLine
+
 Start-sleep 5
 
 # get AD schema path
 $adSchema = (Get-ADRootDSE).schemaNamingContext
 Write-Host "AD Schema Path:" $adSchema
+DashedLine
 
 # get user schema
 $userSchema = Get-ADObject -SearchBase $adSchema -Filter "Name -eq 'User'"
 Write-Host "user schema" $userSchema
+DashedLine
 
 # set the short name for custom attribute with no spaces
 $attributeName = "mnspAdminNumber"
 Write-Host "AttributeName" $attributeName
+DashedLine
 
 # set the short description for custom attribute
 $attributeDesc = "MNSP Admin Number"
 Write-Host "Attribute Description:" $attributeDesc
+DashedLine
 
 # paste the OID generated earlier
 
@@ -82,7 +88,7 @@ $adAttributes = @{
     searchflags = $indexable
 }
 Write-Host "Custom attributes hashtable:" $adAttributes
-
+DashedLine
 
 if ($OID -eq "REPLACE_THIS") {
     throw "OID value incorrect - exiting" ## needs better QOS ###
@@ -91,9 +97,11 @@ if ($OID -eq "REPLACE_THIS") {
 # create the custom attribute in AD schema
 Write-Host "PS to execute: New-ADObject -Name $attributeName -Type attributeSchema -Path $adSchema -OtherAttributes $adAttributes -verbose"
 New-ADObject -Name $attributeName -Type attributeSchema -Path $adSchema -OtherAttributes $adAttributes -verbose
+DashedLine
 
 # add the custom attribute to user class
 Write-Host "PS to execute: $userSchema | Set-ADObject -Add @{mayContain = $attributeName} -verbose"
 $userSchema | Set-ADObject -Add @{mayContain = $attributeName} -verbose
+DashedLine
 
 Stop-Transcript
