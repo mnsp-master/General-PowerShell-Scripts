@@ -1,10 +1,17 @@
-#MNSP Version 1.0.8
+$mnspver = "1.0.9"
 
 Clear-Host
 $LogDir = @()
 Write-Host ""
 $LogDir = Read-Host "Path for Transcript log, e.g D:\Temp\ADschemaExtension" 
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
+
+function DashedLine {
+Write-host "-----------------------------------------------------------`n"
+}
+
+Write-Host $(Get-Date)
+Write-Host "MNSP Version" $mnspver
 
 Write-Host "Checking for $LogDir"
 
