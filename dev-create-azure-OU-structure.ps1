@@ -1,8 +1,9 @@
-$mnspver = "0.0.13"
+$mnspver = "0.0.14"
 Clear-Host
 $LogDir = @()
 $LogDir = "$env:USERPROFILE\Documents\PS1s\$CID\Logs"
 Write-Host ""
+Start-Sleep 10
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 
 function DashedLine {
