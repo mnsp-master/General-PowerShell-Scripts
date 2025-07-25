@@ -1,4 +1,4 @@
-$mnspver = "0.0.11"
+$mnspver = "0.0.12"
 Clear-Host
 $LogDir = @()
 $LogDir = "$env:USERPROFILE\Documents\PS1s\$CID\Logs"
@@ -22,12 +22,17 @@ If(!(test-path -PathType container $LogDir))
 
 Start-Transcript -Path $transcriptlog -Force -NoClobber -Append
 
+ChildOUs = Import-csv -path $tempcsv1
+
+foreach ($ChildOU in $ChildOUs)
+
+
 try {
     Get-ADOrganizationalUnit -identity $fullOUpath -ErrorAction Stop
-    Write-Host "The OU '$childOUname' exists under '$ParentOU'"
+    Write-Host "The OU '$childOU' exists under '$ParentOU'"
 }
 catch {
-    Write-Host "The OU '$ChildOUname' does not exist under '$parentOU' or an error occurred: $($_.Exception.Message)"
+    Write-Host "The OU '$ChildOU' does not exist under '$parentOU' or an error occurred: $($_.Exception.Message)"
     
 }
 
