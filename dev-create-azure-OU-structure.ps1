@@ -1,4 +1,4 @@
-$mnspver = "0.0.6"
+$mnspver = "0.0.7"
 $CID = "C03830"
 Clear-Host
 $LogDir = @()
@@ -17,7 +17,7 @@ Write-Host "Checking for $LogDir"
 
 If(!(test-path -PathType container $LogDir))
 {
-      Write-Warning "$LogDir does not exist exiting script..."
+      Write-Warning "$LogDir does not exist creating..."
       New-Item $LogDir -ItemType Directory -Verbose
 }
 
