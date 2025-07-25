@@ -1,9 +1,9 @@
-$mnspver = "0.0.1"
+$mnspver = "0.0.""
 
 Clear-Host
 $LogDir = @()
 Write-Host ""
-$LogDir = Read-Host "Path for Transcript log, e.g D:\Temp\ADschemaExtension" 
+$LogDir = Read-Host "Path for Transcript log, e.g C:\Temp\createOUs" 
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 
 function DashedLine {
