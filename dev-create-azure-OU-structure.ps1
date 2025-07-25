@@ -1,7 +1,7 @@
-$mnspver = "0.0.10"
+$mnspver = "0.0.11"
 Clear-Host
 $LogDir = @()
-
+$LogDir = "$env:USERPROFILE\Documents\PS1s\$CID\Logs"
 Write-Host ""
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 
