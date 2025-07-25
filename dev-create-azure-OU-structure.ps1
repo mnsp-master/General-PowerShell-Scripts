@@ -1,7 +1,8 @@
-$mnspver = "0.0.3"
+$mnspver = "0.0.4"
 
 Clear-Host
 $LogDir = @()
+$LogDir = ""
 Write-Host ""
 $LogDir = Read-Host "Path for Transcript log, e.g C:\Temp\createOUs" 
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
