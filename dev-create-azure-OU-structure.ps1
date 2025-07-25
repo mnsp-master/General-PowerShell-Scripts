@@ -1,4 +1,4 @@
-$mnspver = "0.0.14"
+$mnspver = "0.0.15"
 Clear-Host
 $LogDir = @()
 $LogDir = "$env:USERPROFILE\Documents\PS1s\$CID\Logs"
@@ -23,7 +23,7 @@ If(!(test-path -PathType container $LogDir))
 
 Start-Transcript -Path $transcriptlog -Force -NoClobber -Append
 
-ChildOUs = Import-csv -path $tempcsv1
+$ChildOUs = Import-csv -path $tempcsv1
 
 foreach ($ChildOU in $ChildOUs) {
     try {
