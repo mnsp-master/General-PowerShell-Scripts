@@ -1,8 +1,8 @@
-$mnspver = "0.0.16"
+$mnspver = "0.0.17"
 Clear-Host
 $LogDir = @()
 $LogDir = "$env:USERPROFILE\Documents\PS1s\$CID\Logs"
-Write-Host ""
+Write-Host "MNSP Version:" $mnspver
 Start-Sleep 10
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 
@@ -35,5 +35,6 @@ foreach ($ChildOU in $ChildOUs) {
         Write-Host "The OU '$ChildOU' does not exist under '$parentOU' or an error occurred: $($_.Exception.Message)"
         
     }
+    DashedLine
 }
 Stop-Transcript
