@@ -1,4 +1,4 @@
-$mnspver = "0.0.8"
+$mnspver = "0.0.9"
 $CID = "C03830"
 Clear-Host
 $LogDir = @()
@@ -22,5 +22,14 @@ If(!(test-path -PathType container $LogDir))
 }
 
 Start-Transcript -Path $transcriptlog -Force -NoClobber -Append
+
+try {
+    Get-ADOrganizationalUnit -identity $fullOUpath -ErrorAction Stop
+    Write-Host "The OU '$childOUname' exists under '$ParentOU'"
+}
+catch {
+    Write-Host "The OU '$ChildOUname' does not exist under '$parentOU' or an error occurred: $($_.Exception.Message)"
+    
+}
 
 Stop-Transcript
