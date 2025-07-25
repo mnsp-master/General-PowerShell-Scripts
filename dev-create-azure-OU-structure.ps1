@@ -1,10 +1,9 @@
-$mnspver = "0.0.4"
-
+$mnspver = "0.0.5"
+$CID = "C03830"
 Clear-Host
 $LogDir = @()
-$LogDir = ""
+$LogDir = "$env:USERPROFILE\PS1s\$CID\Logs"
 Write-Host ""
-$LogDir = Read-Host "Path for Transcript log, e.g C:\Temp\createOUs" 
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 
 function DashedLine {
