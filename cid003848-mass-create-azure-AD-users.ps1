@@ -1,4 +1,4 @@
-$mnspver = "0.0.21"
+$mnspver = "0.0.22"
 Clear-Host
 
 $LogDir = @()
@@ -48,8 +48,20 @@ catch {
     exit 1 # Exit the script if CSV import fails
 }
 
-Write-Host "$VerifiedUserData = Get-Content -path $tempcsv4 | convertFrom-csv | where { $_.$FieldMatch01 -like '$FieldString' }"
 Write-Host "School to process:" $FieldMatch01
 Write-Host "Number of records matching selection criteria:" $VerifiedUserData.count
+
+foreach ($user in $VerifiedUserData) {
+    
+    $FirstName = $User.FirstName
+    $LastName = $User.LastName
+    $Email = $User.Email20Chars
+
+    Write-Host "Processing user:"
+    $FirstName $LastName $Email20Chars
+    DashedLine
+
+
+}
 
 Stop-Transcript
