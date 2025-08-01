@@ -1,4 +1,4 @@
-$mnspver = "0.0.34"
+$mnspver = "0.0.35"
 Clear-Host
 
 $LogDir = @()
@@ -32,10 +32,10 @@ Write-host "-----------------------------------------------------------`n"
 # --- Import School Data from CSV ---
 try {
     $OUdata = Import-Csv -Path $tempcsv1 -ErrorAction Stop
-}
-catch {
-    Write-Error "Failed to import CSV from '$tempcsv1'. Error: $($_.Exception.Message)"
-    exit 1 # Exit the script if CSV import fails
+    }
+    catch {
+        Write-Error "Failed to import CSV from '$tempcsv1'. Error: $($_.Exception.Message)"
+        exit 1 # Exit the script if CSV import fails
 }
 
 # --- Import School Student Data from CSV ---
@@ -88,6 +88,7 @@ foreach ($user in $VerifiedUserData) {
     Write-Host "Destination OU:" $UpdatedDestOU
     Write-Host "Full OU Path:" $FullOuPath
     
+    <#
     $pwd = $(Invoke-WebRequest -Uri $pwdUrl -UseBasicParsing)
 #    $pwd.Content
     #$pwd.StatusCode
@@ -101,6 +102,7 @@ foreach ($user in $VerifiedUserData) {
         }
 
     $password = ConvertTo-SecureString -AsPlainText $password -Force
+    #>
 
     #create AD user
     try {
@@ -124,10 +126,9 @@ foreach ($user in $VerifiedUserData) {
                 }
 
             Write-Host "New AD user Properties:" $aduserProps
-
             new-aduser @aduserProps -WhatIf
 
-             Set-ADUser -Identity $aduser -Add @{mnspAdminNumber="$UPN"} -verbose -whatif ## Comment Whatif to Action
+            #Set-ADUser -Identity $aduser -Add @{mnspAdminNumber="$UPN"} -verbose -whatif ## Comment Whatif to Action
 
         }
     }
