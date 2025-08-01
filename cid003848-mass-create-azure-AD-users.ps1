@@ -1,4 +1,4 @@
-$mnspver = "0.0.36"
+$mnspver = "0.0.37"
 Clear-Host
 
 $LogDir = @()
@@ -103,6 +103,7 @@ foreach ($user in $VerifiedUserData) {
     $password = ConvertTo-SecureString -AsPlainText $password -Force
     
     #create AD user
+    <#
     try {
         #check proposed username does not already exist
             if (Get-Aduser -Identity $samAccountName -ErrorAction SilentlyContinue) {
@@ -130,7 +131,7 @@ foreach ($user in $VerifiedUserData) {
 
         }
     }
-
+#>
 }
 
 
