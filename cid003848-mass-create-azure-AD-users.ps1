@@ -1,4 +1,4 @@
-$mnspver = "0.0.2"
+$mnspver = "0.0.3"
 Clear-Host
 $CID = "" #Change ID e.g: C09826
 $LogDir = @()
