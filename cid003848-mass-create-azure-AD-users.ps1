@@ -1,4 +1,4 @@
-$mnspver = "0.0.51"
+$mnspver = "0.0.52"
 Clear-Host
 
 $LogDir = @()
@@ -107,11 +107,11 @@ foreach ($user in $VerifiedUserData) {
    
                 $aduserProps = @{
                     Name = $DisplayName
-                    UserprincipalName = $Email
+                    UserPrincipalName = $Email
                     GivenName = $FirstName
                     Surname = $LastName
                     DisplayName = $DisplayName
-                    path = $FullOuPath
+                    Path = $FullOuPath
                     AccountPassword = $password
                     EmailAddress = $Email
                     EmployeeID = $MISidComplete
