@@ -1,4 +1,4 @@
-$mnspver = "0.0.23"
+$mnspver = "0.0.24"
 Clear-Host
 
 $LogDir = @()
@@ -53,12 +53,14 @@ Write-Host "Number of records matching selection criteria:" $VerifiedUserData.co
 
 foreach ($user in $VerifiedUserData) {
     
-    $FirstName = $($User.FirstName)
-    $LastName = $($User.LastName)
-    $Email = $($User.Email20Chars)
+    $FirstName = $User."FirstName"
+    $LastName = $User."LastName"
+    $Email = $User."Email20Chars"
 
     Write-Host "Processing user:"
-    $FirstName $LastName $Email20Chars
+    Write-Host "Firstname: $FirstName"
+    Write-Host "Lastname: $LastName"
+    Write-Host "Email: $Email"
     DashedLine
 
 
