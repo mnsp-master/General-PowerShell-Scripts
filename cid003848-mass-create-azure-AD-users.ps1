@@ -1,4 +1,4 @@
-$mnspver = "0.0.42"
+$mnspver = "0.0.43"
 Clear-Host
 
 $LogDir = @()
@@ -104,16 +104,7 @@ foreach ($user in $VerifiedUserData) {
     $password = ConvertTo-SecureString -AsPlainText $password -Force
     
     #create AD user
-    
-    <#
-    try {
-        #check proposed username does not already exist
-            if (Get-Aduser -Identity $samAccountName -ErrorAction SilentlyContinue) {
-                Write-Warning "User '$samAccountName' already exists Skipping creation..."
-            }
-        
-        catch {
-            #>           
+   
                 $aduserProps = @{
                     Name = $DisplayName
                     UserprincipalName = $Email
@@ -130,7 +121,7 @@ foreach ($user in $VerifiedUserData) {
             Write-Host "New AD user Properties:" $aduserProps
             new-aduser @aduserProps -WhatIf
 
-            #Set-ADUser -Identity $aduser -Add @{mnspAdminNumber="$UPN"} -verbose -whatif ## Comment Whatif to Action
+            Set-ADUser -Identity $aduser -Add @{mnspAdminNumber="$UPN"} -verbose -whatif ## Comment Whatif to Action
 
         DashedLine
 }
