@@ -1,4 +1,4 @@
-$mnspver = "0.0.46"
+$mnspver = "0.0.47"
 Clear-Host
 
 $LogDir = @()
@@ -64,6 +64,7 @@ foreach ($user in $VerifiedUserData) {
     $DestOU = [int] $user."NC Year(s) for today" #set var as interger
     $MISid = $user."Arbor Student ID" # DEV 
     $MISidComplete = "$MISsitePrefix-$MISid" #concatenate sitename hyphen and MIS id number e.g: SCH-292 students
+    $UPN = $user."UPN"
     $samAccountName = $Email.Split('@')[0]
 
     #add leading zero if required: to create consitent OUs YEAR07 not YEAR7: 
@@ -95,6 +96,7 @@ foreach ($user in $VerifiedUserData) {
     Write-Host "saMaccountName: $samAccountName"
     Write-Host "Arbor ID: $MISid"
     Write-Host "LDAP EmployeeID: $MISidComplete"
+    Write-Host "UPN: $UPN"
     Write-Host "Destination OU: $UpdatedDestOU"
     Write-Host "Full OU Path: $FullOuPath"
     Write-Host "Password: $password"  
