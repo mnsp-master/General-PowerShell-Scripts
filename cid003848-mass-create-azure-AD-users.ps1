@@ -1,4 +1,4 @@
-$mnspver = "0.0.18"
+$mnspver = "0.0.19"
 Clear-Host
 
 $LogDir = @()
@@ -11,7 +11,11 @@ Remove-variable -name "FieldString"
 #set variables from local file
 Get-Content "$PSScriptRoot\variables.txt" | Where-Object {$_.length -gt 0} | Where-Object {!$_.StartsWith("#")} | ForEach-Object { 
 $var = $_.Split('=',2).Trim() 
-New-Variable -Scope Script -Name $var[0] -Value $var[1] 
+    try {
+        New-Variable -Scope Script -Name $var[0] -Value $var[1] }
+        catch {
+            Write-warning "Variable already exists"
+        }
 }
 
 Write-Host "MNSP Version:" $mnspver
