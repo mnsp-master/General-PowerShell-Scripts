@@ -1,4 +1,4 @@
-$mnspver = "0.0.44"
+$mnspver = "0.0.45"
 Clear-Host
 
 $LogDir = @()
@@ -118,7 +118,7 @@ foreach ($user in $VerifiedUserData) {
             Write-Host "New AD user Properties:" $aduserProps
             new-aduser @aduserProps -WhatIf
 
-            Set-ADUser -Identity $aduser -Add @{mnspAdminNumber="$UPN"} -verbose -whatif ## Comment Whatif to Action
+            Set-ADUser -Identity $samAccountName-Add @{mnspAdminNumber="$UPN"} -verbose -whatif ## Comment Whatif to Action
 
         DashedLine
 }
