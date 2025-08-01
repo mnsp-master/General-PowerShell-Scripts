@@ -1,4 +1,4 @@
-$mnspver = "0.0.26"
+$mnspver = "0.0.27"
 Clear-Host
 
 $LogDir = @()
@@ -52,8 +52,9 @@ catch {
     exit 1 # Exit the script if CSV import fails
 }
 
-Write-Host "School to process:" $FieldMatch01
+Write-Host "School to process: $FieldMatch01 : $FieldString "
 Write-Host "Number of records matching selection criteria:" $VerifiedUserData.count
+DashedLine
 
 foreach ($user in $VerifiedUserData) {
     
