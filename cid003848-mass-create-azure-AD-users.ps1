@@ -1,12 +1,8 @@
-$mnspver = "0.0.16"
+$mnspver = "0.0.17"
 Clear-Host
 
 $LogDir = @()
 $LogDir = "$PSScriptRoot\Logs"
-
-$FieldMatch01 = @()
-$FieldString = @()
-
 
 #set variables from local file
 Get-Content "$PSScriptRoot\variables.txt" | Where-Object {$_.length -gt 0} | Where-Object {!$_.StartsWith("#")} | ForEach-Object { 
