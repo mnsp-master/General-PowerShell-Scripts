@@ -1,4 +1,4 @@
-$mnspver = "0.0.25"
+$mnspver = "0.0.26"
 Clear-Host
 
 $LogDir = @()
@@ -41,7 +41,11 @@ catch {
 # --- Import School Student Data from CSV ---
 try {
     #$VerifiedUserData = Get-Content -path $tempcsv4 | convertFrom-csv | where { $_.$FieldMatch01 -like '$FieldString' } #import where field like $FieldMatch01
-    $VerifiedUserData = import-csv -path $tempcsv4 | where-object { $_.$FieldMatch01 -eq $FieldString }
+    #$VerifiedUserData = Get-Content -path $tempcsv4 | convertFrom-csv | where-object { 
+#    $_.$FieldMatch01 -like $FieldString -and 
+#    $_.$Fieldmatch02 -match '^[0-9]+$' #Numeric values only - excludes - R N1 N2 etc
+
+    $VerifiedUserData = import-csv -path $tempcsv4 | where-object { $_.$FieldMatch01 -eq $FieldString -and $_.$Fieldmatch02 -match '^[0-9]+$' }
 }
 catch {
     Write-Error "Failed to import CSV from '$tempcsv4'. Error: $($_.Exception.Message)"
