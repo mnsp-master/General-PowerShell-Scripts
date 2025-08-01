@@ -1,4 +1,4 @@
-$mnspver = "0.0.35"
+$mnspver = "0.0.36"
 Clear-Host
 
 $LogDir = @()
@@ -79,16 +79,15 @@ foreach ($user in $VerifiedUserData) {
             }
     $FullOuPath = $UpdatedDestOU + $ADBaseDN
 
-    Write-Host "Processing user: "
+    Write-Host "Processing user: $DisplayName"
     Write-Host "Firstname: $FirstName"
     Write-Host "Lastname: $LastName"
     Write-Host "Email: $Email"
     Write-Host "Arbor ID: $MISid"
-    Write-Host "LDAP EmployeeID:" $MISidComplete
-    Write-Host "Destination OU:" $UpdatedDestOU
-    Write-Host "Full OU Path:" $FullOuPath
+    Write-Host "LDAP EmployeeID: $MISidComplete"
+    Write-Host "Destination OU: $UpdatedDestOU"
+    Write-Host "Full OU Path: $FullOuPath"
     
-    <#
     $pwd = $(Invoke-WebRequest -Uri $pwdUrl -UseBasicParsing)
 #    $pwd.Content
     #$pwd.StatusCode
@@ -102,16 +101,15 @@ foreach ($user in $VerifiedUserData) {
         }
 
     $password = ConvertTo-SecureString -AsPlainText $password -Force
-    #>
-
+    
     #create AD user
     try {
         #check proposed username does not already exist
-        if (Get-Aduser -Identity $samAccountName -ErrorAction SilentlyContinue) {
-            Write-Warning "User '$samAccountName' already exists Skipping creation..."
-        }
+            if (Get-Aduser -Identity $samAccountName -ErrorAction SilentlyContinue) {
+                Write-Warning "User '$samAccountName' already exists Skipping creation..."
+            }
 
-        else {           
+        catch {           
                 $aduserProps = @{
                     Name = $DisplayName
                     UserprincipalName = $Email
@@ -134,5 +132,6 @@ foreach ($user in $VerifiedUserData) {
     }
 
 }
+
 
 Stop-Transcript
