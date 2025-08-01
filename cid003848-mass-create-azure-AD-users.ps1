@@ -1,4 +1,4 @@
-$mnspver = "0.0.15"
+$mnspver = "0.0.16"
 Clear-Host
 
 $LogDir = @()
@@ -19,7 +19,7 @@ $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 Start-Transcript -Path $transcriptlog -Force -NoClobber -Append
 clear-host
 
-#get-variable
+get-variable
 
 function DashedLine {
 Write-host "-----------------------------------------------------------`n"
