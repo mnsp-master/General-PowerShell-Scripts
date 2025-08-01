@@ -1,4 +1,4 @@
-$mnspver = "0.0.33"
+$mnspver = "0.0.34"
 Clear-Host
 
 $LogDir = @()
@@ -69,7 +69,6 @@ foreach ($user in $VerifiedUserData) {
     $MISidComplete = "$MISsitePrefix-$MISid" #concatenate sitename hyphen and MIS id number e.g: SCH-292 students
     $samAccountName = $Email.Split('@')[0]
 
-
     #add leading zero if required: to create consitent OUs YEAR07 not YEAR7: 
         if ( $DestOU -le 9) {
             #Write-host "Target Year group less than or equal to 9..."
@@ -78,6 +77,7 @@ foreach ($user in $VerifiedUserData) {
             } else {
             $UpdatedDestOU = $($MISsitePrefix+ "-Year" + $DestOU)
             }
+    $FullOuPath = $UpdatedDestOU + $ADBaseDN
 
     Write-Host "Processing user: "
     Write-Host "Firstname: $FirstName"
@@ -86,7 +86,21 @@ foreach ($user in $VerifiedUserData) {
     Write-Host "Arbor ID: $MISid"
     Write-Host "LDAP EmployeeID:" $MISidComplete
     Write-Host "Destination OU:" $UpdatedDestOU
-    DashedLine
+    Write-Host "Full OU Path:" $FullOuPath
+    
+    $pwd = $(Invoke-WebRequest -Uri $pwdUrl -UseBasicParsing)
+#    $pwd.Content
+    #$pwd.StatusCode
+        if ($pwd.StatusCode -eq 200) {
+        Write-Host "proceed with pwd reservation"
+        $password = $($pwd.Content)
+        #Write-Host "Password: " $password
+        } else {
+        Write-Error "No Webserver, or pwd received"
+        $password = $pwdFailsafe
+        }
+
+    $password = ConvertTo-SecureString -AsPlainText $password -Force
 
     #create AD user
     try {
@@ -95,18 +109,25 @@ foreach ($user in $VerifiedUserData) {
             Write-Warning "User '$samAccountName' already exists Skipping creation..."
         }
 
-        else {
-            $aduser = New-Aduser -samAccountName $samAccountName `
-            -UserprincipalName $Email `
-            -GivenName $FirstName `
-            -Surname $LastName `
-            -DisplayName $DisplayName `
-            -path $ouPath `
-            -AccountPassword $password `
-            -enabled $true
-            -whatif
+        else {           
+                $aduserProps = @{
+                    Name = $DisplayName
+                    UserprincipalName = $Email
+                    GivenName = $FirstName
+                    Surname = $LastName
+                    DisplayName = $DisplayName
+                    path = $FullOuPath
+                    AccountPassword = $password
+                    EmailAddress = $Email
+                    EmployeeID = $MISidComplete
+                    enabled = $true
+                }
 
+            Write-Host "New AD user Properties:" $aduserProps
 
+            new-aduser @aduserProps -WhatIf
+
+             Set-ADUser -Identity $aduser -Add @{mnspAdminNumber="$UPN"} -verbose -whatif ## Comment Whatif to Action
 
         }
     }
