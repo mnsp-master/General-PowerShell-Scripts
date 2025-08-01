@@ -1,8 +1,8 @@
-$mnspver = "0.0.4"
+$mnspver = "0.0.5"
 Clear-Host
-.\variables.ps1 #get var values from local file
 
 $LogDir = @()
+.\variables.ps1 #get var values from local file
 
 Write-Host "MNSP Version:" $mnspver
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
