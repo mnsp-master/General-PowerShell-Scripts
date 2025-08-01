@@ -1,4 +1,4 @@
-$mnspver = "0.0.32"
+$mnspver = "0.0.33"
 Clear-Host
 
 $LogDir = @()
@@ -59,6 +59,7 @@ DashedLine
 
 foreach ($user in $VerifiedUserData) {
     
+    $DisplayName = $user."Name"
     $FirstName = $User."FirstName"
     $LastName = $User."LastName"
     $Email = $User."Email20Chars"
@@ -66,25 +67,49 @@ foreach ($user in $VerifiedUserData) {
     $DestOU = [int] $user."NC Year(s) for today" #set var as interger
     $MISid = $user."Arbor Student ID" # DEV 
     $MISidComplete = "$MISsitePrefix-$MISid" #concatenate sitename hyphen and MIS id number e.g: SCH-292 students
+    $samAccountName = $Email.Split('@')[0]
+
 
     #add leading zero if required: to create consitent OUs YEAR07 not YEAR7: 
         if ( $DestOU -le 9) {
-            Write-host "Target Year group less than or equal to 9..."
+            #Write-host "Target Year group less than or equal to 9..."
             $UpdatedDestOU = @()
             $UpdatedDestOU = $($MISsitePrefix + "-Year" + "0" + $DestOU)
             } else {
             $UpdatedDestOU = $($MISsitePrefix+ "-Year" + $DestOU)
             }
 
-    Write-Host "Processing user:"
+    Write-Host "Processing user: "
     Write-Host "Firstname: $FirstName"
     Write-Host "Lastname: $LastName"
     Write-Host "Email: $Email"
     Write-Host "Arbor ID: $MISid"
-    Write-Host "SalamanderID:" $MISidComplete
+    Write-Host "LDAP EmployeeID:" $MISidComplete
     Write-Host "Destination OU:" $UpdatedDestOU
     DashedLine
 
+    #create AD user
+    try {
+        #check proposed username does not already exist
+        if (Get-Aduser -Identity $samAccountName -ErrorAction SilentlyContinue) {
+            Write-Warning "User '$samAccountName' already exists Skipping creation..."
+        }
+
+        else {
+            $aduser = New-Aduser -samAccountName $samAccountName `
+            -UserprincipalName $Email `
+            -GivenName $FirstName `
+            -Surname $LastName `
+            -DisplayName $DisplayName `
+            -path $ouPath `
+            -AccountPassword $password `
+            -enabled $true
+            -whatif
+
+
+
+        }
+    }
 
 }
 
