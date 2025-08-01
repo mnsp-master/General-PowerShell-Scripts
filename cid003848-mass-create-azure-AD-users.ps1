@@ -1,4 +1,4 @@
-$mnspver = "0.0.40"
+$mnspver = "0.0.41"
 Clear-Host
 
 $LogDir = @()
@@ -77,13 +77,13 @@ foreach ($user in $VerifiedUserData) {
             } else {
             $UpdatedDestOU = $($MISsitePrefix+ "-Year" + $DestOU)
             }
-    $FullOuPath = $UpdatedDestOU + $ADBaseDN
+    $FullOuPath = $UpdatedDestOU + "," + $ADBaseDN
 
         $pwd = $(Invoke-WebRequest -Uri $pwdUrl -UseBasicParsing)
             #$pwd.Content
             #$pwd.StatusCode
             if ($pwd.StatusCode -eq 200) {
-            Write-Host "proceed with pwd reservation"
+            #Write-Host "proceed with pwd reservation"
             $password = $($pwd.Content)
             #Write-Host "Password: " $password
             } else {
