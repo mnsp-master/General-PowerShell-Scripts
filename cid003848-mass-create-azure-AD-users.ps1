@@ -1,4 +1,4 @@
-$mnspver = "0.0.37"
+$mnspver = "0.0.38"
 Clear-Host
 
 $LogDir = @()
@@ -79,6 +79,20 @@ foreach ($user in $VerifiedUserData) {
             }
     $FullOuPath = $UpdatedDestOU + $ADBaseDN
 
+        $pwd = $(Invoke-WebRequest -Uri $pwdUrl -UseBasicParsing)
+            #$pwd.Content
+            #$pwd.StatusCode
+            if ($pwd.StatusCode -eq 200) {
+            Write-Host "proceed with pwd reservation"
+            $password = $($pwd.Content)
+            #Write-Host "Password: " $password
+            } else {
+            Write-Error "No Webserver, or pwd received"
+            $password = $pwdFailsafe
+            }
+
+    $password = ConvertTo-SecureString -AsPlainText $password -Force
+
     Write-Host "Processing user: $DisplayName"
     Write-Host "Firstname: $FirstName"
     Write-Host "Lastname: $LastName"
@@ -87,20 +101,8 @@ foreach ($user in $VerifiedUserData) {
     Write-Host "LDAP EmployeeID: $MISidComplete"
     Write-Host "Destination OU: $UpdatedDestOU"
     Write-Host "Full OU Path: $FullOuPath"
+    Write-Host "Password: $password"  
     
-    $pwd = $(Invoke-WebRequest -Uri $pwdUrl -UseBasicParsing)
-#    $pwd.Content
-    #$pwd.StatusCode
-        if ($pwd.StatusCode -eq 200) {
-        Write-Host "proceed with pwd reservation"
-        $password = $($pwd.Content)
-        #Write-Host "Password: " $password
-        } else {
-        Write-Error "No Webserver, or pwd received"
-        $password = $pwdFailsafe
-        }
-
-    $password = ConvertTo-SecureString -AsPlainText $password -Force
     
     #create AD user
     <#
