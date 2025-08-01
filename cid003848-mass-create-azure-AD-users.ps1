@@ -1,10 +1,10 @@
-$mnspver = "0.0.6"
+$mnspver = "0.0.7"
 Clear-Host
 
 $LogDir = @()
 $LogDir = "$PSScriptRoot\Logs"
 
-#get var values from local file
+#set variables from local file
 Get-Content "$PSScriptRoot\variables.txt" | Where-Object {$_.length -gt 0} | Where-Object {!$_.StartsWith("#")} | ForEach-Object { 
 $var = $_.Split('=',2).Trim() 
 New-Variable -Scope Script -Name $var[0] -Value $var[1] 
