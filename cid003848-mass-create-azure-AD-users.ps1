@@ -1,4 +1,4 @@
-$mnspver = "0.0.24"
+$mnspver = "0.0.25"
 Clear-Host
 
 $LogDir = @()
@@ -56,11 +56,13 @@ foreach ($user in $VerifiedUserData) {
     $FirstName = $User."FirstName"
     $LastName = $User."LastName"
     $Email = $User."Email20Chars"
+    $ArborID = $User."Arbor Student ID"
 
     Write-Host "Processing user:"
     Write-Host "Firstname: $FirstName"
     Write-Host "Lastname: $LastName"
     Write-Host "Email: $Email"
+    Write-Host "Arbor ID: $ArborID"
     DashedLine
 
 
