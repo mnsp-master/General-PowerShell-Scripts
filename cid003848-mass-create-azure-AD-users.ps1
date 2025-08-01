@@ -1,9 +1,9 @@
-$mnspver = "0.0.3"
+$mnspver = "0.0.4"
 Clear-Host
-$CID = "" #Change ID e.g: C09826
+.\variables.ps1 #get var values from local file
+
 $LogDir = @()
-$LogDir = "$env:USERPROFILE\Documents\PS1s\$CID\Logs"
-$tempcsv1 = "$env:USERPROFILE\Documents\PS1s\$CID\Data\tempcsv1.csv"
+
 Write-Host "MNSP Version:" $mnspver
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 Start-Transcript -Path $transcriptlog -Force -NoClobber -Append
@@ -22,6 +22,6 @@ catch {
     exit 1 # Exit the script if CSV import fails
 }
 
-
+Write-Host "gsheet Student number column heading:" $FieldMatch01
 
 Stop-Transcript
