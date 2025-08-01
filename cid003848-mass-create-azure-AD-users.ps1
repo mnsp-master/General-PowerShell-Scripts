@@ -1,4 +1,4 @@
-$mnspver = "0.0.55"
+$mnspver = "0.0.57"
 Clear-Host
 
 $LogDir = @()
