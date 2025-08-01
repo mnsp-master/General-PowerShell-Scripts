@@ -1,13 +1,21 @@
-$mnspver = "0.0.5"
+$mnspver = "0.0.6"
 Clear-Host
 
 $LogDir = @()
-.\variables.ps1 #get var values from local file
+$LogDir = "$PSScriptRoot\Logs"
+
+#get var values from local file
+Get-Content "$PSScriptRoot\variables.txt" | Where-Object {$_.length -gt 0} | Where-Object {!$_.StartsWith("#")} | ForEach-Object { 
+$var = $_.Split('=',2).Trim() 
+New-Variable -Scope Script -Name $var[0] -Value $var[1] 
+}
 
 Write-Host "MNSP Version:" $mnspver
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 Start-Transcript -Path $transcriptlog -Force -NoClobber -Append
 clear-host
+
+get-variable
 
 function DashedLine {
 Write-host "-----------------------------------------------------------`n"
