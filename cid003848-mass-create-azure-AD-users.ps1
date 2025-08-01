@@ -1,4 +1,4 @@
-$mnspver = "0.0.39"
+$mnspver = "0.0.40"
 Clear-Host
 
 $LogDir = @()
@@ -91,8 +91,6 @@ foreach ($user in $VerifiedUserData) {
             $password = $pwdFailsafe
             }
 
-    $password = ConvertTo-SecureString -AsPlainText $password -Force
-
     Write-Host "Processing user: $DisplayName"
     Write-Host "Firstname: $FirstName"
     Write-Host "Lastname: $LastName"
@@ -103,6 +101,7 @@ foreach ($user in $VerifiedUserData) {
     Write-Host "Full OU Path: $FullOuPath"
     Write-Host "Password: $password"  
     
+    $password = ConvertTo-SecureString -AsPlainText $password -Force
     
     #create AD user
     <#
