@@ -1,4 +1,4 @@
-$mnspver = "0.0.38"
+$mnspver = "0.0.39"
 Clear-Host
 
 $LogDir = @()
@@ -134,6 +134,7 @@ foreach ($user in $VerifiedUserData) {
         }
     }
 #>
+DashedLine
 }
 
 
