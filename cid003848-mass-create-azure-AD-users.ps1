@@ -1,8 +1,12 @@
-$mnspver = "0.0.17"
+$mnspver = "0.0.18"
 Clear-Host
 
 $LogDir = @()
 $LogDir = "$PSScriptRoot\Logs"
+
+Remove-variable -name "FieldMatch01"
+Remove-variable -name "FieldString"
+
 
 #set variables from local file
 Get-Content "$PSScriptRoot\variables.txt" | Where-Object {$_.length -gt 0} | Where-Object {!$_.StartsWith("#")} | ForEach-Object { 
