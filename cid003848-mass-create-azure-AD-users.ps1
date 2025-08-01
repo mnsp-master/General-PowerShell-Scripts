@@ -1,4 +1,4 @@
-$mnspver = "0.0.7"
+$mnspver = "0.0.8"
 Clear-Host
 
 $LogDir = @()
@@ -29,6 +29,16 @@ catch {
     Write-Error "Failed to import CSV from '$tempcsv1'. Error: $($_.Exception.Message)"
     exit 1 # Exit the script if CSV import fails
 }
+
+# --- Import School Student Data from CSV ---
+try {
+    $UserData = Import-Csv -Path $tempcsv4 -ErrorAction Stop
+}
+catch {
+    Write-Error "Failed to import CSV from '$tempcsv4'. Error: $($_.Exception.Message)"
+    exit 1 # Exit the script if CSV import fails
+}
+
 
 Write-Host "gsheet Student number column heading:" $FieldMatch01
 
