@@ -1,4 +1,4 @@
-$mnspver = "0.0.28"
+$mnspver = "0.0.31"
 Clear-Host
 
 $LogDir = @()
@@ -62,12 +62,26 @@ foreach ($user in $VerifiedUserData) {
     $LastName = $User."LastName"
     $Email = $User."Email20Chars"
     $ArborID = $User."Arbor Student ID"
+    $DestOU = [int] $user."NC Year(s) for today" #set var as interger
+    $MISid = $user."Arbor Student ID" # DEV 
+    $MISidComplete = "$MISsitePrefix-$MISid" #concatenate sitename hyphen and MIS id number e.g: SCH-292 students
+
+    #add leading zero if required: to create consitent OUs YEAR07 not YEAR7: 
+        if ( $DestOU -le 9) {
+            Write-host "Target Year group less than or equal to 9..."
+            $UpdatedDestOU = @()
+            $UpdatedDestOU = $($MISsitePrefix + "-Year" + "0" + $DestOU)
+            } else {
+            $UpdatedDestOU = $($MISsitePrefix+ "-Year" + $DestOU)
+            }
 
     Write-Host "Processing user:"
     Write-Host "Firstname: $FirstName"
     Write-Host "Lastname: $LastName"
     Write-Host "Email: $Email"
-    Write-Host "Arbor ID: $ArborID"
+    Write-Host "Arbor ID: $MISid"
+    Write-Host "SalamanderID:" $MISidComplete
+    Write-Host "Destination OU:" $UpdatedDestOU
     DashedLine
 
 
