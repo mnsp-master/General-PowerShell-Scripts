@@ -1,4 +1,4 @@
-$mnspver = "0.0.31"
+$mnspver = "0.0.32"
 Clear-Host
 
 $LogDir = @()
@@ -23,7 +23,7 @@ $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 Start-Transcript -Path $transcriptlog -Force -NoClobber -Append
 clear-host
 
-#get-variable
+get-variable
 
 function DashedLine {
 Write-host "-----------------------------------------------------------`n"
@@ -54,6 +54,7 @@ catch {
 
 Write-Host "School to process: $FieldMatch01 : $FieldString "
 Write-Host "Number of records matching selection criteria:" $VerifiedUserData.count
+Write-Host "MIS Site Prefix:" $MISsitePrefix
 DashedLine
 
 foreach ($user in $VerifiedUserData) {
