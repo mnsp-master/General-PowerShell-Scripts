@@ -1,9 +1,10 @@
-$mnspver = "0.0.54"
+$mnspver = "0.0.55"
 Clear-Host
 
 $LogDir = @()
 $LogDir = "$PSScriptRoot\Logs"
 
+$ADattribs = ("EmployeeNumber","SamAccountName","userPrincipalName","mail","DisplayName","CN","GivenName","Name","sn","distinguishedName","ObjectGUID")
 
 #set variables from local file
 Get-Content "$PSScriptRoot\variables.txt" | Where-Object {$_.length -gt 0} | Where-Object {!$_.StartsWith("#")} | ForEach-Object { 
@@ -119,11 +120,11 @@ foreach ($user in $VerifiedUserData) {
                 }
 
             Write-Host "New AD user Properties:" $aduserProps
-            new-aduser @aduserProps #-WhatIf
+            new-aduser @aduserProps -WhatIf
 
             start-sleep 2
-
-            Set-ADUser -Identity $samAccountName -Add @{mnspAdminNumber="$UPN"} -verbose -whatif ## Comment Whatif to Action
+            $UserToProcess = $(Get-ADUser -Filter "EmployeeID -Like '$MISidComplete'" -Properties * | select-object $ADattribs)
+            Set-ADUser -Identity $($UserToProcess.ObjectGUID) -Add @{mnspAdminNumber="$UPN"} -verbose -whatif ## Comment Whatif to Action
 
         DashedLine
 }
