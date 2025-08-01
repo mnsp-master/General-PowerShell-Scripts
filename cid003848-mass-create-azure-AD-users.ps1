@@ -1,4 +1,4 @@
-$mnspver = "0.0.50"
+$mnspver = "0.0.51"
 Clear-Host
 
 $LogDir = @()
@@ -119,7 +119,7 @@ foreach ($user in $VerifiedUserData) {
                 }
 
             Write-Host "New AD user Properties:" $aduserProps
-            new-aduser @aduserProps -verbose #-WhatIf
+            new-aduser @aduserProps #-WhatIf
 
             start-sleep 2
 
