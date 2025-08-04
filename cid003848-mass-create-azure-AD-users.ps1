@@ -1,4 +1,4 @@
-$mnspver = "0.0.77"
+$mnspver = "0.0.78"
 Clear-Host
 
 $LogDir = @()
@@ -136,6 +136,8 @@ foreach ($user in $VerifiedUserData) {
                 Set-ADUser -Identity $samAccountName -Add @{mnspAdminNumber="$UPN"} -verbose #-whatif ## Comment Whatif to Action - set UPN
                 
                 Write-Host "Processed user details:"
+                $ProcessedUser = @()
+                $ProcessedUser = $(Get-ADUser -Filter "EmployeeID -Like '$MISidComplete'" -Properties * | select-object $ADattribs)
                 $ProcessedUser
 
                 #capture initial credentials
