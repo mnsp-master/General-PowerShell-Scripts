@@ -1,4 +1,4 @@
-$mnspver = "0.0.80"
+$mnspver = "0.0.81"
 Clear-Host
 
 $LogDir = @()
@@ -159,7 +159,7 @@ Write-Host "Uploading local csv data to google drive..."
 set-location $GamDir
 
 #upload post migtation data in gsheet...
-Write-Host "$UsersInfoGsheetID = $(Invoke-Expression "$GamDir\gam.exe user $GoogleSvcAccount create drivefile drivefilename '$MISsitePrefix Migrated User Info' mimetype gsheet parentid $GfolderReportsID returnidonly")"
+Write-Host "$UsersInfoGsheetID = Invoke-Expression $GamDir\gam.exe user $GoogleSvcAccount create drivefile drivefilename '$MISsitePrefix Migrated User Info' mimetype gsheet parentid $GfolderReportsID returnidonly)"
 
 #$UsersInfoGsheetID = $(Invoke-Expression "$GamDir\gam.exe user $GoogleSvcAccount create drivefile drivefilename '$MISsitePrefix Migrated User Info' mimetype gsheet parentid $GfolderReportsID returnidonly")
 
