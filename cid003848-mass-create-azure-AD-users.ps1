@@ -1,4 +1,4 @@
-$mnspver = "0.0.70"
+$mnspver = "0.0.71"
 Clear-Host
 
 $LogDir = @()
@@ -124,7 +124,7 @@ foreach ($user in $VerifiedUserData) {
                 }
 
             Write-Host "Proceeding with User: $email Creation..."
-            new-aduser @aduserProps -WhatIf
+            new-aduser @aduserProps #-whatif
 
             start-sleep 2
             
@@ -134,7 +134,7 @@ foreach ($user in $VerifiedUserData) {
             if ($ProcessedUser) {
                 #set UPN
                 Write-Host "Set-ADUser -Identity $samAccountName -Add @{mnspAdminNumber="$UPN"} -verbose"
-                Set-ADUser -Identity $samAccountName -Add @{mnspAdminNumber="$UPN"} -verbose -whatif ## Comment Whatif to Action - set UPN
+                Set-ADUser -Identity $samAccountName -Add @{mnspAdminNumber="$UPN"} -verbose #-whatif ## Comment Whatif to Action - set UPN
                 
                 Write-Host "Processed user details:"
                 $ProcessedUser
