@@ -1,4 +1,4 @@
-$mnspver = "0.0.73"
+$mnspver = "0.0.74"
 Clear-Host
 
 $LogDir = @()
@@ -72,6 +72,7 @@ foreach ($user in $VerifiedUserData) {
             }
     $FullOuPath = "OU=" + $UpdatedDestOU + "," + $ADBaseDN
 
+    #password generator...
         $pwd = @()
         try {
         $pwd = $(Invoke-WebRequest -Uri $pwdUrl -UseBasicParsing)
