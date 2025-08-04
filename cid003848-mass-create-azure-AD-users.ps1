@@ -1,4 +1,4 @@
-$mnspver = "0.0.69"
+$mnspver = "0.0.70"
 Clear-Host
 
 $LogDir = @()
@@ -99,6 +99,14 @@ foreach ($user in $VerifiedUserData) {
     $PlainPassword = $Password
     $password = ConvertTo-SecureString -AsPlainText $password -Force
     
+    #Confirm if user already exists...
+    Write-Host "Checking if proposed user already exists (using AD attribute: EmployeeID (MIS ID))"
+    
+    $UserToProcess = @()
+    $UserToProcess = $(Get-ADUser -Filter "EmployeeID -Like '$MISidComplete'" -Properties * | select-object $ADattribs)
+
+    if ( -not $UserToProcess) {
+
     #create AD user
    
                 $aduserProps = @{
@@ -115,7 +123,7 @@ foreach ($user in $VerifiedUserData) {
                     enabled = $true
                 }
 
-            #Write-Host "New AD user Properties:" @aduserProps | format-Table
+            Write-Host "Proceeding with User: $email Creation..."
             new-aduser @aduserProps -WhatIf
 
             start-sleep 2
@@ -139,6 +147,10 @@ foreach ($user in $VerifiedUserData) {
                 }
             
         DashedLine
+    } else {
+        Write-Warning "User: $email already exists skipping user creation..."
+
+    }
 }
 
 Stop-Transcript
