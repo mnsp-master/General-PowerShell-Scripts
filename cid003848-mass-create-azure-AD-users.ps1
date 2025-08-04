@@ -1,4 +1,4 @@
-$mnspver = "0.0.62"
+$mnspver = "0.0.63"
 Clear-Host
 
 $LogDir = @()
@@ -135,13 +135,14 @@ foreach ($user in $VerifiedUserData) {
             
             #confirm created user attribs
             try {
-            $ProcessedUser = $(Get-ADUser -Filter "EmployeeID -Like '$MISidComplete'" -Properties * | select-object $ADattribs)
-            Write-Host "Processed user details:"
-            $ProcessedUser
-            
+                $ProcessedUser = $(Get-ADUser -Filter "EmployeeID -Like '$MISidComplete'" -Properties * | select-object $ADattribs)
+                Write-Host "Processed user details:"
+                $ProcessedUser
+                }
+                
             catch {
-            Write-Warning "No user found with employeeID: '$MISidComplete'"
-            }
+                Write-Warning "No user found with employeeID: '$MISidComplete'"
+                }
 
             #capture initial credentials
             "$firstname,$lastname,$DisplayName,$Email,$SamAccountName,$PlainPassword" | out-file -filepath $tempcsv2 -Append 
