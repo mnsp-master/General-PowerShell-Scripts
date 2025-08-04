@@ -1,5 +1,5 @@
-$mnspver = "0.0.65"
-#Clear-Host
+$mnspver = "0.0.66"
+Clear-Host
 
 $LogDir = @()
 $LogDir = "$PSScriptRoot\Logs"
