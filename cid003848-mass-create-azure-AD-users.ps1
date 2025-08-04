@@ -1,4 +1,4 @@
-$mnspver = "0.0.75"
+$mnspver = "0.0.76"
 Clear-Host
 
 $LogDir = @()
@@ -143,7 +143,6 @@ foreach ($user in $VerifiedUserData) {
 
                 } else {
                 Write-Warning "No user found with employeeID: '$MISidComplete'"
-                $UserToProcess
                 }
             
         DashedLine
