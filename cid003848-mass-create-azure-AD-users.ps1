@@ -1,4 +1,4 @@
-$mnspver = "0.0.60"
+$mnspver = "0.0.61"
 Clear-Host
 
 $LogDir = @()
@@ -124,12 +124,19 @@ foreach ($user in $VerifiedUserData) {
                     enabled = $true
                 }
 
-            Write-Host "New AD user Properties:" @aduserProps | format-Table
+            #Write-Host "New AD user Properties:" @aduserProps | format-Table
             new-aduser @aduserProps -WhatIf
 
             start-sleep 2
-            $UserToProcess = $(Get-ADUser -Filter "EmployeeID -Like '$MISidComplete'" -Properties * | select-object $ADattribs)
-            Set-ADUser -Identity $($UserToProcess.ObjectGUID) -Add @{mnspAdminNumber="$UPN"} -verbose -whatif ## Comment Whatif to Action
+            
+            #set UPN
+            Write-Host "Set-ADUser -Identity $samAccountName -Add @{mnspAdminNumber="$UPN"} -verbose"
+            Set-ADUser -Identity $samAccountName -Add @{mnspAdminNumber="$UPN"} -verbose -whatif ## Comment Whatif to Action - set UPN
+            
+            #confirm created user attribs
+            Write-Host "Processed user details:"
+            $ProcessedUser = $(Get-ADUser -Filter "EmployeeID -Like '$MISidComplete'" -Properties * | select-object $ADattribs)
+            $ProcessedUser
 
             #capture initial credentials
             "$firstname,$lastname,$DisplayName,$Email,$SamAccountName,$PlainPassword" | out-file -filepath $tempcsv2 -Append 
