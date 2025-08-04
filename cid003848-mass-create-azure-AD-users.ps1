@@ -1,4 +1,4 @@
-$mnspver = "0.0.79"
+$mnspver = "0.0.80"
 Clear-Host
 
 $LogDir = @()
@@ -159,8 +159,13 @@ Write-Host "Uploading local csv data to google drive..."
 set-location $GamDir
 
 #upload post migtation data in gsheet...
-$UsersInfoGsheetID = $(Invoke-Expression "$GamDir\gam.exe user $GoogleSvcAccount create drivefile drivefilename '$MISsitePrefix Migrated User Info' mimetype gsheet parentid $GfolderReportsID returnidonly")
-Invoke-Expression "$GamDir\gam.exe user $GoogleSvcAccount update drivefile id $UsersInfoGsheetID localfile $tempcsv2 newfilename 'User info - for domain: $GoogleWorkspaceDestinationMailDomain as of: $(Get-date)'" #-ErrorAction SilentlyContinue
+Write-Host "$UsersInfoGsheetID = $(Invoke-Expression "$GamDir\gam.exe user $GoogleSvcAccount create drivefile drivefilename '$MISsitePrefix Migrated User Info' mimetype gsheet parentid $GfolderReportsID returnidonly")"
+
+#$UsersInfoGsheetID = $(Invoke-Expression "$GamDir\gam.exe user $GoogleSvcAccount create drivefile drivefilename '$MISsitePrefix Migrated User Info' mimetype gsheet parentid $GfolderReportsID returnidonly")
+
+write-host "Invoke-Expression $GamDir\gam.exe user $GoogleSvcAccount update drivefile id $UsersInfoGsheetID localfile $tempcsv2 newfilename 'User info - for domain: $GoogleWorkspaceDestinationMailDomain as of: $(Get-date)'"
+
+#Invoke-Expression "$GamDir\gam.exe user $GoogleSvcAccount update drivefile id $UsersInfoGsheetID localfile $tempcsv2 newfilename 'User info - for domain: $GoogleWorkspaceDestinationMailDomain as of: $(Get-date)'" #-ErrorAction SilentlyContinue
 
 Stop-Transcript
 
