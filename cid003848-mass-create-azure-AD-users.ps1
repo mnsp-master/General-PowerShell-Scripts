@@ -1,4 +1,4 @@
-$mnspver = "0.0.76"
+$mnspver = "0.0.77"
 Clear-Host
 
 $LogDir = @()
@@ -148,6 +148,7 @@ foreach ($user in $VerifiedUserData) {
         DashedLine
     } else {
         Write-Warning "User: $email already exists skipping user creation..."
+        #Set-ADUser -Identity $samAccountName -Add @{mnspAdminNumber="$UPN"} -verbose #-whatif ## Comment Whatif to Action - set UPN
 
     }
 }
