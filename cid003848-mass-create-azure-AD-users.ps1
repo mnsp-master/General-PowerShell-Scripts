@@ -1,4 +1,4 @@
-$mnspver = "0.0.72"
+$mnspver = "0.0.73"
 Clear-Host
 
 $LogDir = @()
@@ -72,17 +72,15 @@ foreach ($user in $VerifiedUserData) {
             }
     $FullOuPath = "OU=" + $UpdatedDestOU + "," + $ADBaseDN
 
+        $pwd = @()
+        try {
         $pwd = $(Invoke-WebRequest -Uri $pwdUrl -UseBasicParsing)
-            #$pwd.Content
-            #$pwd.StatusCode
-            if ($pwd.StatusCode -eq 200) {
-            #Write-Host "proceed with pwd reservation"
-            $password = $($pwd.Content)
-            #Write-Host "Password: " $password
-            } else {
+        $Password = $($pwd.content)
+        }
+            catch {
             Write-Error "No Webserver, or pwd received"
             $password = $pwdFailsafe
-            }
+        }
 
     Write-Host "Processing user: $DisplayName"
     Write-Host "Firstname: $FirstName"
@@ -172,5 +170,16 @@ $VerifiedUserData = Get-Content -path $tempcsv4 | convertFrom-csv | where { $_.$
     $_.$FieldMatch01 -like $FieldString -and 
     $_.$Fieldmatch02 -match '^[0-9]+$' #Numeric values only - excludes - R N1 N2 etc
 
+        $pwd = $(Invoke-WebRequest -Uri $pwdUrl -UseBasicParsing)
+            #$pwd.Content
+            #$pwd.StatusCode
+            if ($pwd.StatusCode -eq 200) {
+            #Write-Host "proceed with pwd reservation"
+            $password = $($pwd.Content)
+            #Write-Host "Password: " $password
+            } else {
+            Write-Error "No Webserver, or pwd received"
+            $password = $pwdFailsafe
+            }
 
 #>
