@@ -1,4 +1,4 @@
-$mnspver = "0.0.66"
+$mnspver = "0.0.67"
 Clear-Host
 
 $LogDir = @()
@@ -26,17 +26,6 @@ clear-host
 function DashedLine {
 Write-host "-----------------------------------------------------------`n"
 }
-
-<#
-#Import School Data from CSV
-try {
-    $OUdata = Import-Csv -Path $tempcsv1 -ErrorAction Stop
-    }
-    catch {
-        Write-Error "Failed to import CSV from '$tempcsv1'. Error: $($_.Exception.Message)"
-        exit 1 # Exit the script if CSV import fails
-}
-#>
 
 #Import School Student Data from CSV
 try {
@@ -155,6 +144,17 @@ foreach ($user in $VerifiedUserData) {
 Stop-Transcript
 
 <#
+
+<#
+#Import School Data from CSV
+try {
+    $OUdata = Import-Csv -Path $tempcsv1 -ErrorAction Stop
+    }
+    catch {
+        Write-Error "Failed to import CSV from '$tempcsv1'. Error: $($_.Exception.Message)"
+        exit 1 # Exit the script if CSV import fails
+}
+
 $VerifiedUserData = Get-Content -path $tempcsv4 | convertFrom-csv | where { $_.$FieldMatch01 -like '$FieldString' } #import where field like $FieldMatch01
     $VerifiedUserData = Get-Content -path $tempcsv4 | convertFrom-csv | where-object { 
     $_.$FieldMatch01 -like $FieldString -and 
