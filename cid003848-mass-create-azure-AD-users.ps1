@@ -1,10 +1,10 @@
-$mnspver = "0.0.71"
+$mnspver = "0.0.72"
 Clear-Host
 
 $LogDir = @()
 $LogDir = "$PSScriptRoot\Logs"
 
-$ADattribs = ("EmployeeNumber","SamAccountName","userPrincipalName","mail","DisplayName","CN","GivenName","Name","sn","distinguishedName","ObjectGUID")
+$ADattribs = ("EmployeeID","EmployeeNumber","SamAccountName","userPrincipalName","mail","DisplayName","CN","GivenName","Name","sn","distinguishedName","ObjectGUID","mnspAdminNumber")
 
 #set variables from local file
 Get-Content "$PSScriptRoot\variables.txt" | Where-Object {$_.length -gt 0} | Where-Object {!$_.StartsWith("#")} | ForEach-Object { 
