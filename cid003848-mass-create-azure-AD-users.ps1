@@ -1,4 +1,4 @@
-$mnspver = "0.0.57"
+$mnspver = "0.0.58"
 Clear-Host
 
 $LogDir = @()
@@ -27,7 +27,7 @@ function DashedLine {
 Write-host "-----------------------------------------------------------`n"
 }
 
-# --- Import School Data from CSV ---
+#Import School Data from CSV
 try {
     $OUdata = Import-Csv -Path $tempcsv1 -ErrorAction Stop
     }
@@ -36,13 +36,8 @@ try {
         exit 1 # Exit the script if CSV import fails
 }
 
-# --- Import School Student Data from CSV ---
+#Import School Student Data from CSV
 try {
-    #$VerifiedUserData = Get-Content -path $tempcsv4 | convertFrom-csv | where { $_.$FieldMatch01 -like '$FieldString' } #import where field like $FieldMatch01
-    #$VerifiedUserData = Get-Content -path $tempcsv4 | convertFrom-csv | where-object { 
-#    $_.$FieldMatch01 -like $FieldString -and 
-#    $_.$Fieldmatch02 -match '^[0-9]+$' #Numeric values only - excludes - R N1 N2 etc
-
     $VerifiedUserData = import-csv -path $tempcsv4 | where-object { $_.$FieldMatch01 -eq $FieldString -and $_.$Fieldmatch02 -match '^[0-9]+$' }
 }
 catch {
@@ -53,6 +48,14 @@ catch {
 Write-Host "School to process: $FieldMatch01 : $FieldString "
 Write-Host "Number of records matching selection criteria:" $VerifiedUserData.count
 Write-Host "MIS Site Prefix:" $MISsitePrefix
+
+
+#prepare user details capture csv
+Write-Host "emptying $tempcsv2 of any existing data..."
+Clear-Content $tempcsv2
+sleep 1
+$UserInfoCSVheader | out-file -filepath $tempcsv2 -Append #create blank csv with simple header
+
 DashedLine
 
 foreach ($user in $VerifiedUserData) {
@@ -102,6 +105,7 @@ foreach ($user in $VerifiedUserData) {
     Write-Host "Full OU Path: $FullOuPath"
     Write-Host "Password: $password"  
     
+    $PlainPassword = $Password
     $password = ConvertTo-SecureString -AsPlainText $password -Force
     
     #create AD user
@@ -109,6 +113,7 @@ foreach ($user in $VerifiedUserData) {
                 $aduserProps = @{
                     Name = $DisplayName
                     UserPrincipalName = $Email
+                    SamAccountName = $SamAccountName
                     GivenName = $FirstName
                     Surname = $LastName
                     DisplayName = $DisplayName
@@ -126,7 +131,19 @@ foreach ($user in $VerifiedUserData) {
             $UserToProcess = $(Get-ADUser -Filter "EmployeeID -Like '$MISidComplete'" -Properties * | select-object $ADattribs)
             Set-ADUser -Identity $($UserToProcess.ObjectGUID) -Add @{mnspAdminNumber="$UPN"} -verbose -whatif ## Comment Whatif to Action
 
+            #capture initial credentials
+            "$firstname,$lastname,$DisplayName,$Email,$SamAccountName,$PlainPassword" | out-file -filepath $tempcsv2 -Append 
+
         DashedLine
 }
 
 Stop-Transcript
+
+<#
+$VerifiedUserData = Get-Content -path $tempcsv4 | convertFrom-csv | where { $_.$FieldMatch01 -like '$FieldString' } #import where field like $FieldMatch01
+    $VerifiedUserData = Get-Content -path $tempcsv4 | convertFrom-csv | where-object { 
+    $_.$FieldMatch01 -like $FieldString -and 
+    $_.$Fieldmatch02 -match '^[0-9]+$' #Numeric values only - excludes - R N1 N2 etc
+
+
+#>
