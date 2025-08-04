@@ -1,4 +1,4 @@
-$mnspver = "0.0.63"
+$mnspver = "0.0.64"
 Clear-Host
 
 $LogDir = @()
@@ -27,6 +27,7 @@ function DashedLine {
 Write-host "-----------------------------------------------------------`n"
 }
 
+<#
 #Import School Data from CSV
 try {
     $OUdata = Import-Csv -Path $tempcsv1 -ErrorAction Stop
@@ -35,6 +36,7 @@ try {
         Write-Error "Failed to import CSV from '$tempcsv1'. Error: $($_.Exception.Message)"
         exit 1 # Exit the script if CSV import fails
 }
+#>
 
 #Import School Student Data from CSV
 try {
