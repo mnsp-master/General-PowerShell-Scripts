@@ -1,6 +1,6 @@
-$mnspver = "0.0.22"
+$mnspver = "0.0.25"
 Clear-Host
-$CID = "" #Change ID e.g: C09826
+$CID = "C03830" #Change ID e.g: C09826
 $LogDir = @()
 $LogDir = "$env:USERPROFILE\Documents\PS1s\$CID\Logs"
 $tempcsv1 = "$env:USERPROFILE\Documents\PS1s\$CID\Data\tempcsv1.csv"
@@ -13,7 +13,7 @@ function DashedLine {
 Write-host "-----------------------------------------------------------`n"
 }
 
-# --- Import School Data from CSV ---
+#Import School Data from CSV
 try {
     $OUdata = Import-Csv -Path $tempcsv1 -ErrorAction Stop
 }
@@ -22,9 +22,10 @@ catch {
     exit 1 # Exit the script if CSV import fails
 }
 
-$BaseDN = "OU=Primary Schools,OU=Students,OU=MNSP,DC=mnsp,DC=org,DC=uk"
-$parentOUPath = "OU=Primary Schools,OU=Students,OU=MNSP,DC=mnsp,DC=org,DC=uk"
+#update base DN's as required...
 
+$BaseDN = "OU=REPLACE_ME"
+$parentOUPath = "OU=REPLACE_ME"
 
 
 foreach ($School in $OUdata ) {
@@ -32,15 +33,25 @@ foreach ($School in $OUdata ) {
         $SSN = $($School.SchoolShortName)
         Write-Host "School Short Name:" $SSN
 
+        #(un)Comment as required...
         $LeafOUs = @(
         "$SSN-Year01",
         "$SSN-Year02",
-        "$SSN-Year03"
-        # "$SSN-Year04",
-        # "$SSN-Year05",
-        # "$SSN-Year06",
-        # "$SSN-GenericStudents",
-        # "$SSN-StudentOffBoarding"
+        "$SSN-Year03",
+        "$SSN-Year04",
+        "$SSN-Year05",
+        "$SSN-Year06",
+        #"$SSN-Year07",
+        #"$SSN-Year08",
+        #"$SSN-Year09",
+        #"$SSN-Year10",
+        #"$SSN-Year11",
+        #"$SSN-Year12",
+        #"$SSN-Year13",
+        #"$SSN-Year14",
+        "$SSN-GenericStudentAccounts",
+        "$SSN-StudentGroups",
+        "$SSN-StudentOffBoarding"
         )
 
         $ParentOU = $($school.Parent)
@@ -49,7 +60,7 @@ foreach ($School in $OUdata ) {
         Write-Host "ParentOU Path:" $ParentOUPath
         $fullOuDn = "OU=$ouName," + $BaseDN
 
-        #----check for and create Parent OU's----
+        #check for and create Parent OU's...
         try {
             $existingOU = @()
             #Write-Host "$existingOu = Get-ADOrganizationalUnit -Identity $ParentOUPath -ErrorAction Stop"
@@ -63,7 +74,7 @@ foreach ($School in $OUdata ) {
 
             try {
                 # Create the new OU
-                $newOu = New-ADOrganizationalUnit -Name $ParentOU -Path $BaseDN -PassThru #-WhatIf
+                $newOu = New-ADOrganizationalUnit -Name $ParentOU -Path $BaseDN -PassThru #-whatif
                 Write-Host "Successfully created OU: '$($newOu.Name)'"
                 Write-Host "Distinguished Name: $($newOu.DistinguishedName)"
                 Write-Host "Path: $($newOu.CanonicalName)"
@@ -82,7 +93,7 @@ foreach ($School in $OUdata ) {
       }
 
 
-        #----check for and create leaf OU's----
+        #check for and create leaf OU's...
         foreach ($ouName in $LeafOUs) {
 
             $fullOuDn = "OU=$ouName," + $parentOUPath
@@ -103,7 +114,7 @@ foreach ($School in $OUdata ) {
 
                     try {
                         # Create the new OU
-                        $newOu = New-ADOrganizationalUnit -Name $ouName -Path $parentOUPath -PassThru #-WhatIf
+                        $newOu = New-ADOrganizationalUnit -Name $ouName -Path $parentOUPath -PassThru #-whatif
 
                         Write-Host "Successfully created OU: '$($newOu.Name)'"
                         Write-Host "Distinguished Name: $($newOu.DistinguishedName)"
