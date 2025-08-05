@@ -1,4 +1,4 @@
-$mnspver = "0.0.26"
+$mnspver = "0.0.27"
 Clear-Host
 $CID = "C03830" #Change ID e.g: C09826
 $LogDir = @()
@@ -36,32 +36,32 @@ foreach ($School in $OUdata ) {
         #(un)Comment as required...
         $LeafOUs = @(
                     #
-        #students
-        "$SSN-Year01",
-        "$SSN-Year02",
-        "$SSN-Year03",
-        "$SSN-Year04",
-        #"$SSN-Year05",
-        #"$SSN-Year06",
-        #"$SSN-Year07",
-        #"$SSN-Year08",
-        #"$SSN-Year09",
-        #"$SSN-Year10",
-        #"$SSN-Year11",
-        #"$SSN-Year12",
-        #"$SSN-Year13",
-        #"$SSN-Year14",
-        "$SSN-GenericStudentAccounts",
-        "$SSN-StudentGroups",
-        "$SSN-StudentOffBoarding"
-        #
-        #staff
-        #"$SSN-Delegated",
-        #"$SSN-EmployedStaff",
-        #"$SSN-StaffOffBoarding",
-        #"$SSN-OtherStaff",
-        #"$SSN-Service",
-        #"$SSN-SharedDrives"
+                    #students
+                    "$SSN-Year01",
+                    "$SSN-Year02",
+                    "$SSN-Year03",
+                    "$SSN-Year04",
+                    #"$SSN-Year05",
+                    #"$SSN-Year06",
+                    #"$SSN-Year07",
+                    #"$SSN-Year08",
+                    #"$SSN-Year09",
+                    #"$SSN-Year10",
+                    #"$SSN-Year11",
+                    #"$SSN-Year12",
+                    #"$SSN-Year13",
+                    #"$SSN-Year14",
+                    "$SSN-GenericStudentAccounts",
+                    "$SSN-StudentGroups",
+                    "$SSN-StudentOffBoarding"
+                    #
+                    #staff
+                    #"$SSN-Delegated",
+                    #"$SSN-EmployedStaff",
+                    #"$SSN-StaffOffBoarding",
+                    #"$SSN-OtherStaff",
+                    #"$SSN-Service",
+                    #"$SSN-SharedDrives"
         )
 
         $ParentOU = $($school.Parent)
