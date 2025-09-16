@@ -1,8 +1,13 @@
-$mnspver = "0.0.5"
+$mnspver = "0.0.6"
 Clear-Host
+
+$RootDir = "N:\PS1s\TID43264" # update as required
 $LogDir = @()
-$LogDir = "$PSScriptRoot\Logs"
-$tempcsv1 = "$PSScriptRoot\Data\temp1.csv"
+$DataDir = @()
+$LogDir =  "$RootDir\Logs"
+$DataDir = "$RootDir\Data"
+$tempcsv1 = "$DataDir\temp1_dev.csv"
+
 Write-Host "MNSP Version:" $mnspver
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 $ADattribs = ("EmployeeNumber","SamAccountName","userPrincipalName","mail","HomeDirectory","DisplayName","CN","GivenName","Name","sn","distinguishedName","ObjectGUID","mnspAdminNumber")
@@ -77,5 +82,6 @@ foreach ($user in $userdata){
         Dashedline
     }
 }
+
 
 Stop-Transcript
