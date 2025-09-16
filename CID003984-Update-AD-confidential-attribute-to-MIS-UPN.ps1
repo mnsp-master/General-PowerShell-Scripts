@@ -1,8 +1,8 @@
-$mnspver = "0.0.4"
+$mnspver = "0.0.5"
 Clear-Host
 $LogDir = @()
 $LogDir = "$PSScriptRoot\Logs"
-$tempcsv1 = "$PSScriptRoot\Data\temp1_dev.csv"
+$tempcsv1 = "$PSScriptRoot\Data\temp1.csv"
 Write-Host "MNSP Version:" $mnspver
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 $ADattribs = ("EmployeeNumber","SamAccountName","userPrincipalName","mail","HomeDirectory","DisplayName","CN","GivenName","Name","sn","distinguishedName","ObjectGUID","mnspAdminNumber")
