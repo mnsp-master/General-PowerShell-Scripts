@@ -1,4 +1,4 @@
-$mnspver = "0.0.6"
+$mnspver = "0.0.7"
 Clear-Host
 
 $RootDir = "N:\PS1s\TID43264" # update as required
@@ -12,7 +12,7 @@ Write-Host "MNSP Version:" $mnspver
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 $ADattribs = ("EmployeeNumber","SamAccountName","userPrincipalName","mail","HomeDirectory","DisplayName","CN","GivenName","Name","sn","distinguishedName","ObjectGUID","mnspAdminNumber")
 
-$MISIDprefix = "WRI" #update this to school short name: FGS, MEN etc...
+$MISIDprefix = "WRI" #update as required to school short name: FGS, MEN etc...
 
 Start-Transcript -Path $transcriptlog -Force -NoClobber -Append
 clear-host
