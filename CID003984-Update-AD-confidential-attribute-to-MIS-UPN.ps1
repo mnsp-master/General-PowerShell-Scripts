@@ -1,4 +1,4 @@
-$mnspver = "0.0.7"
+$mnspver = "0.0.8"
 Clear-Host
 
 $RootDir = "N:\PS1s\TID43264" # update as required
@@ -6,13 +6,13 @@ $LogDir = @()
 $DataDir = @()
 $LogDir =  "$RootDir\Logs"
 $DataDir = "$RootDir\Data"
-$tempcsv1 = "$DataDir\temp1_dev.csv"
+$tempcsv1 = "$DataDir\temp1.csv" #update as required
 
 Write-Host "MNSP Version:" $mnspver
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 $ADattribs = ("EmployeeNumber","SamAccountName","userPrincipalName","mail","HomeDirectory","DisplayName","CN","GivenName","Name","sn","distinguishedName","ObjectGUID","mnspAdminNumber")
 
-$MISIDprefix = "WRI" #update as required to school short name: FGS, MEN etc...
+$MISIDprefix = "MEN" #update as required to school short name: FGS, MEN etc...
 
 Start-Transcript -Path $transcriptlog -Force -NoClobber -Append
 clear-host
