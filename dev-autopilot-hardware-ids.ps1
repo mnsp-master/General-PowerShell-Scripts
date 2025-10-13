@@ -1,4 +1,4 @@
-$mnspver = "0.0.2"
+$mnspver = "0.0.3"
 Clear-Host
 $TID = "T03830" #Ticket ID e.g: T09826
 $LogDir = @()
@@ -39,6 +39,7 @@ foreach ($HostName in $Hosts) {
 stop-transcript
 
     <#
+    #confirm winRM service is running start if not...
     $SrvStatus = get-service -Name WinRM -ComputerName $HostName
     $srvStatus.Status
     if ($srvStatus.Status -ne "Running") {
