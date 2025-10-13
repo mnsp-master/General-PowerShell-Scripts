@@ -1,4 +1,4 @@
-$mnspver = "0.0.1"
+$mnspver = "0.0.2"
 Clear-Host
 $TID = "T03830" #Ticket ID e.g: T09826
 $LogDir = @()
@@ -9,18 +9,15 @@ $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 Start-Transcript -Path $transcriptlog -Force -NoClobber -Append
 clear-host
 
-
-
-
 function DashedLine {
 Write-host "-----------------------------------------------------------`n"
 }
 
-<#
-$hostnames = "C:\temp\autopilot_hosts.csv"
-$hosts = Import-Csv -Path $hostnames
+<# larger numbers:
+$hosts = Import-Csv -Path $tempcsv1
 #>
 
+# limited array:
 $hosts = ("MNSP-005288","MNSP-005289","MNSP-008625","MNSP-006046")
 
 foreach ($HostName in $Hosts) {
