@@ -1,4 +1,4 @@
-$mnspver = "1.0.11"
+$mnspver = "1.0.12"
 
 Clear-Host
 $LogDir = @()
@@ -96,7 +96,8 @@ if ($OID -eq "REPLACE_THIS") {
 
 # create the custom attribute in AD schema
 Write-Host "PS to execute: New-ADObject -Name $attributeName -Type attributeSchema -Path $adSchema -OtherAttributes $adAttributes -verbose"
-New-ADObject -Name $attributeName -Type attributeSchema -Path $adSchema -OtherAttributes $adAttributes -verbose
+#New-ADObject -Name $attributeName -Type attributeSchema -Path $adSchema -OtherAttributes $adAttributes -verbose
+New-ADObject -Name $attributeName -Server (Get-ADForest).SchemaMaster -Type attributeSchema -Path $adSchema -OtherAttributes $adAttributes -verbose #include Master FSMO server
 DashedLine
 
 # add the custom attribute to user class
