@@ -1,4 +1,4 @@
-$mnspver = "1.0.12"
+$mnspver = "1.0.13"
 
 Clear-Host
 $LogDir = @()
@@ -99,6 +99,9 @@ Write-Host "PS to execute: New-ADObject -Name $attributeName -Type attributeSche
 #New-ADObject -Name $attributeName -Type attributeSchema -Path $adSchema -OtherAttributes $adAttributes -verbose
 New-ADObject -Name $attributeName -Server (Get-ADForest).SchemaMaster -Type attributeSchema -Path $adSchema -OtherAttributes $adAttributes -verbose #include Master FSMO server
 DashedLine
+
+Write-host "sleeping for 8 seconds to allow Domain/schema replication..."
+start-sleep 8
 
 # add the custom attribute to user class
 Write-Host "PS to execute: $userSchema | Set-ADObject -Add @{mayContain = $attributeName} -verbose"
